@@ -1,0 +1,20 @@
+git clone https://github.com/coolsnowwolf/lede
+cd lede/
+------------------------------------------------------
+去除feeds.conf.default中src-git helloworld 前的注释
+------------------------------------------------------
+vim feeds.conf.default 
+git clone https://github.com/fw876/helloworld.git
+cd helloworld/
+mv luci-app-ssr-plus/ ../lede/package/lean/
+cd ..
+cd lede/
+make menuconfig
+------------------------------------------------------
+需安装https则 进入LUCI-collection
+选择luci-ssl-openssl（按Y，后面一样） 
+如需定制ddns，如添加 Cloud­flare DDNS 功能则进入Network→IP Addresses and Names
+-----------------------------------------------------
+./scripts/feeds update -a && ./scripts/feeds install -a
+make -j8 download V=s
+make -j$(($(nproc) + 1)) V=s
