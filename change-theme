@@ -1,0 +1,3 @@
+1.进入./feeds/luci/collections/luci下的makefile，
+2.把LUCI_DEPENDS下的luci-theme-bootstrap改为默认主题名
+3.然后make menuconfig把默认的luci-theme-bootstrap勾掉
