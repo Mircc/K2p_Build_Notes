@@ -1,0 +1,10 @@
+Docker添加百度网盘
+docker run -d \
+--name=baidupcs \
+--restart always \
+-v /media/NAS_APP/baidupcs:/app/Downloads \
+-v /media/NAS_APP/baidupcs-config:/app/.config/BaiduPCS-Go \
+-p 5299:5299 \
+80x86/baidupcs:latest
+
+添加FB
