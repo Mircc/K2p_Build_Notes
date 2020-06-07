@@ -8,3 +8,12 @@ docker run -d \
 80x86/baidupcs:latest
 
 添加FB
+1.停止原生fb进程(图形界面system/startup)
+2.ssh中禁用原生fb的启动脚本
+mv /etc/init.d/S99filebrowser /etc/S99filebrowser.disabled
+
+3 777大法避免权限报错
+chmod -R 777 /var/lib/filebrowser
+
+4 ssh中运行命令如下
+docker run -it --restart always -d --name filebrowser --net=host -e SSL=on -e PUID=1000 -e PGID=100 -e WEB_PORT=8081 -v /var/lib/filebrowser:/config -v /media:/myfiles --mount type=tmpfs,destination=/tmp 80x86/filebrowser:latest
