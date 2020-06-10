@@ -17,3 +17,32 @@ chmod -R 777 /var/lib/filebrowser
 
 4 ssh中运行命令如下
 docker run -it --restart always -d --name filebrowser --net=host -e SSL=on -e PUID=1000 -e PGID=100 -e WEB_PORT=8081 -v /var/lib/filebrowser:/config -v /media:/myfiles --mount type=tmpfs,destination=/tmp 80x86/filebrowser:latest
+
+5.备份与恢复
+====================================================================================
+
+说明： 这里的sda1, sdb1 指的是设备名称，不是挂载点. 如指定 sdb1,则表示使用的是 /dev/sdb1 这个设备.
+
+备份：
+
+确保有且仅有一个ext4 分区的可写的硬盘已经挂在N1上，
+
+（PT用户注意：执行以下命令会关闭所有daemon, 因此，确保qb 你已经在web ui手动点击暂停了所有种子。要不然会红种。。。）
+
+然后执行
+
+cfg-backup
+（如果你连接了两个以上的硬盘，比如你想指定备份到 sda1 这个设备，那么可以这样：cfg-backup sda1)
+
+刷完机之后，从备份恢复：
+
+确保前面备份用的那个ext4 分区的硬盘已经挂在N1上，确保有且仅有一个USB设备挂在N1上面，
+
+然后执行
+
+cfg-recovery
+默认不加参数执行，是备份到sda1这个分区，恢复也是.
+
+（如果你有多个分区或硬盘，也可以在后面加参数，比如想从sdb1恢复，则执行 cfg-recovery sdb1）
+
+====================================================================================
