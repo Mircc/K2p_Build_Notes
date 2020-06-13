@@ -1,0 +1,32 @@
+1.禁用原生qBittorrent
+mv /etc/init.d/S92qbittorrent /etc/S92qbittorrent.disabled
+killall qbittorrent-nox
+
+2.备份配置文件到外置存储
+cp -r /var/lib/qbittorrent/.config/qBittorrent /media/NAS_APP/qBittorrent/config
+cp -r /var/lib/qbittorrent/.local/share/data/qBittorrent /media/NAS_APP/qBittorrent/data
+
+3.安装qBittorrent的脚本，保存成.sh文件运行，把网络设置成host模式会有更好的性能表现，而且UPnP/NAT-PMP可以自动映射
+
+IMAGE_NAME=80x86/qbittorrent
+WEB_PORT=$(nvram get app.qb.listen_port)
+DOWNLOAD_PATH=$(cat /var/lib/qbittorrent/.config/qBittorrent/qBittorrent.conf | grep -i 'Downloads\\SavePath' | cut -d'=' -f2)
+BT_PORT=$(cat /var/lib/qbittorrent/.config/qBittorrent/qBittorrent.conf | grep -i 'Connection\\PortRangeMin' | cut -d'=' -f2)
+QBT_AUTH_SERVER_ADDR="127.0.0.1"
+if [ "$DOWNLOAD_PATH" = "/downloads" ] || [ "$DOWNLOAD_PATH" = "/downloads/" ]; then
+    echo "please set correct DOWNLOAD_PATH"
+    exit -1
+fi
+docker run -d --name qbittorrent \
+        -e PUID=$(id -u qbittorrent) \
+        -e PGID=$(cat /etc/group | grep -e '^users' | cut -d':' -f3) \
+        -e WEB_PORT=$WEB_PORT \
+        -e BT_PORT=$BT_PORT \
+        -e QBT_AUTH_SERVER_ADDR=$QBT_AUTH_SERVER_ADDR \
+        --restart unless-stopped \
+        --network host \
+        -v /var/lib/qbittorrent/.config/qBittorrent:/config \
+        -v /var/lib/qbittorrent/.local/share/data/qBittorrent:/data \
+        -v "$DOWNLOAD_PATH":/downloads \
+        --mount type=tmpfs,destination=/tmp \
+        ${IMAGE_NAME}
