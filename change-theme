@@ -1,3 +1,13 @@
 1.进入./feeds/luci/collections/luci下的makefile，
 2.把LUCI_DEPENDS下的luci-theme-bootstrap改为默认主题名
 3.然后make menuconfig把默认的luci-theme-bootstrap勾掉
+
+
+
+更换argon主题示意
+https://github.com/jerrykuku/luci-theme-argon
+cd lede/package/lean  
+rm -rf luci-theme-argon  
+git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git  
+make menuconfig #choose LUCI->Theme->Luci-theme-argon  
+make -j1 V=s  
