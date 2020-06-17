@@ -15,7 +15,7 @@
 `Target选 "QEMU ARM Virtual Machine" > "ARMv8 multiplatform"
 Target Images 要选上tar.gz`
 ## 一键脚本
-这里感谢恩山的@flippy，他制作了一键脚本方便生成docker镜像：[make_opwrt_docker_img.tar.gz](https://zorz.cc/wp-content/uploads/2019/11/make_opwrt_docker_img.tar.gz "make_opwrt_docker_img.tar.gz")
+这里感谢恩山的@flippy，他制作了一键脚本方便生成docker镜像：[make_opwrt_docker_img.tar.gz](https://github.com/Mircc/K2p_Build_Notes/releases/tag/N1_openwrt_make")
 下载好脚本之后
 解压脚本，可以将脚本放置到你喜欢的目录，将之前生成的tar.gz文件放到脚本同一目录。
 创建存放生成的镜像打包文件的目录
