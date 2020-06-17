@@ -67,5 +67,6 @@ rm -rf "$TMPDIR" && \
 docker save ${IMG_NAME}:${TAG} | pigz -9 > $OUTDIR/docker-img-openwrt-aarch64-${TAG}.gz
 ```
 参考链接：
-N1及贝壳云Armbian 5.98(加强版)， 内核5.3.x， 及 Docker Openwrt
-斐讯N1 / 贝壳云 一键制作OpenWrt镜像脚本
+[N1及贝壳云Armbian 5.98(加强版)， 内核5.3.x， 及 Docker Openwrt](https://www.right.com.cn/forum/thread-958173-1-1.html "N1及贝壳云Armbian 5.98(加强版)， 内核5.3.x， 及 Docker Openwrt")
+[斐讯N1 / 贝壳云 一键制作OpenWrt镜像脚本](https://github.com/tuanqing/mknop "斐讯N1 / 贝壳云 一键制作OpenWrt镜像脚本")
+[制作n1的docker版openwrt镜像](https://zorz.cc/post/n1-compile-openwrt-docker-image.html "制作n1的docker版openwrt镜像")
