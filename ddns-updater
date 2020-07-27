@@ -7,3 +7,6 @@ docker run -d --name ddns-updater \
         -v /docker/ddns-updater/data:/app/data \
         --mount type=tmpfs,destination=/tmp \
         80x86/ddns-updater:1.1.7-arm64
+
+
+https://hub.docker.com/r/80x86/ddns-updater
