@@ -1,0 +1,9 @@
+docker pull 80x86/ddns-updater:1.1.7-arm64
+mkdir -p /docker/ddns-updater/data
+chmod 777 /docker/ddns-updater/data
+
+docker run -d --name ddns-updater \
+        -p 8020:8020/tcp \
+        -v /docker/ddns-updater/data:/app/data \
+        --mount type=tmpfs,destination=/tmp \
+        80x86/ddns-updater:1.1.7-arm64
