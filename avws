@@ -8,3 +8,5 @@ docker run -it -d -p 13443:3443 secfa/docker-awvs
 awvs13 username: admin@admin.com
 awvs13 password: Admin123
 AWVS版本：13.0.200217097
+
+https://www.sqlsec.com/2020/04/awvs.html
