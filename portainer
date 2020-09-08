@@ -1,0 +1,4 @@
+1.获取当前docker id
+#docker ps
+
+2.获取当前启动参数
