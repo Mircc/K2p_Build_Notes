@@ -1,4 +1,6 @@
-1.获取当前docker id
-#docker ps
+方法1
+小钢炮后台ui直接重新安装，即可最新版本
 
-2.获取当前启动参数
+方法2
+镜像下载后执行
+docker run -d -p 9000:9000 --restart=always -v /var/lib/docker/data/portainer:/data -v /var/run/docker.sock:/var/run/docker.sock --name dev-portainer portainer/portainer
