@@ -16,7 +16,7 @@ mv /etc/init.d/S99filebrowser /etc/S99filebrowser.disabled
 chmod -R 777 /var/lib/filebrowser
 
 4 ssh中运行命令如下
-docker run -it --restart always -d --name filebrowser --net=host -e SSL=on -e PUID=1000 -e PGID=100 -e WEB_PORT=8081 -v /var/lib/filebrowser:/config -v /media:/myfiles --mount type=tmpfs,destination=/tmp 80x86/filebrowser:latest
+docker run -it --restart always -d --name filebrowser --net=host -e FB_SSL=on -e PUID=1000 -e PGID=100 -e WEB_PORT=8081 -v /var/lib/filebrowser:/config -v /media:/myfiles --mount type=tmpfs,destination=/tmp 80x86/filebrowser:2.9.4-arm64
 
 5.备份与恢复
 ====================================================================================
