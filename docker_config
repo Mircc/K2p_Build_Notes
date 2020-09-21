@@ -1,0 +1,17 @@
+1.启动docker
+docker run -itd -v /home/nginxWebUI:/home/nginxWebUI -e BOOT_OPTIONS="--server.port=8080" --name="nginxwebui" --net=host popphen/nginxwebui:2.0.8 /bin/bash
+
+2.查看docker进程
+docker ps
+
+3.杀死docker进程
+docker kill id
+
+4.删除docker
+docker rm id
+
+5.重命名docker TAG
+docker tag 7b78a2c769a2 popphen/nginxwebui:2.0.8
+
+6.删除docker镜像
+docker rmi id
