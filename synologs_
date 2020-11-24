@@ -1,0 +1,15 @@
+
+1.修改css样式 Main style file
+
+/usr/syno/synoman/webman/resources/css/desktop.css
+
+2.修改icoFavicon files
+
+/usr/syno/synoman/webman/resources/images/icon_dsm_96.png
+/usr/syno/synoman/webman/resources/images/icon_dsm_64.png
+/usr/syno/synoman/webman/resources/images/icon_dsm_48.png
+/usr/syno/synoman/webman/resources/images/icon_dsm_32.png
+/usr/syno/synoman/webman/resources/images/icon_dsm_16.png
+/usr/syno/synoman/webman/favicon.ico
+
+参考：https://blog.cybrox.eu/posts/using-a-custom-login-style-on-a-synology-diskstation/
