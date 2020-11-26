@@ -58,3 +58,4 @@ kH+D4tV+2MJ0r3Pz0ZcfaAKdtW6JGHw1pxcRhWfXGW8=
 	
 ### 部分配置参考
 https://golb.hplar.ch/2019/07/wireguard-windows.html
+![配置参照](https://raw.githubusercontent.com/Mircc/K2p_Build_Notes/master/wireguard_config.png "配置参照")
