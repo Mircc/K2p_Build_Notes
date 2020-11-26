@@ -1,1 +1,60 @@
-<!DOCTYPE html> <html lang="zh"> <head> <meta charset="utf-8"/> <title>Markdown在线编辑器 - www.MdEditor.com</title> <link rel="shortcut icon" href="https://www.mdeditor.com/images/logos/favicon.ico" type="image/x-icon"/> </head> <body><h3 id="h3-u670Du52A1u5668u914Du7F6E"><a name="服务器配置" class="reference-link"></a><span class="header-link octicon octicon-link"></span>服务器配置</h3><p><code>cd /etc/wireguard/</code></p> <h4 id="h4-u914Du7F6Eu8F6Cu53D1u529Fu80FD"><a name="配置转发功能" class="reference-link"></a><span class="header-link octicon octicon-link"></span>配置转发功能</h4><p><code>echo "net.ipv4.ip_forward = 1" &gt;&gt; /etc/sysctl.conf</code></p> <h4 id="h4-u521Bu5EFAu5BC6u94A5u6587u4EF6"><a name="创建密钥文件" class="reference-link"></a><span class="header-link octicon octicon-link"></span>创建密钥文件</h4><p><code>umask 077</code></p> <p><code>wg genkey | tee privatekey | wg pubkey &gt; publickey</code></p> <h4 id="h4-u67E5u770Bu5BC6u94A5"><a name="查看密钥" class="reference-link"></a><span class="header-link octicon octicon-link"></span>查看密钥</h4><p><code>Cat publickey</code></p> <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-markdown"><span class="typ">Na5BMpCXuG0wmyXZH1GE3Uic</span><span class="pun">+</span><span class="pln">hvkq4865lIR</span><span class="pun">+</span><span class="typ">RTJjUU</span><span class="pun">=</span></code></li></ol></pre> <p><code>Cat privatekey</code></p> <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-markdown"><span class="pln">kH</span><span class="pun">+</span><span class="pln">D4tV</span><span class="pun">+</span><span class="lit">2MJ0r3Pz0ZcfaAKdtW6JGHw1pxcRhWfXGW8</span><span class="pun">=</span></code></li></ol></pre> <h4 id="h4--wg-"><a name="创建服务器wg配置文件" class="reference-link"></a><span class="header-link octicon octicon-link"></span>创建服务器wg配置文件</h4><p><code>umask 022</code></p> <p><code>vim wg0.conf</code></p> <h4 id="h4-u8F93u5165u5982u4E0Bu5185u5BB9"><a name="输入如下内容" class="reference-link"></a><span class="header-link octicon octicon-link"></span>输入如下内容</h4><pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code><span class="pun">[</span><span class="typ">Interface</span><span class="pun">]</span></code></li><li class="L1"><code><span class="typ">Address</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="lit">10.0</span><span class="pun">.</span><span class="lit">1.1</span><span class="pun">/</span><span class="lit">16</span></code></li><li class="L2"><code><span class="typ">PrivateKey</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> kH</span><span class="pun">+</span><span class="pln">D4tV</span><span class="pun">+</span><span class="lit">2MJ0r3Pz0ZcfaAKdtW6JGHw1pxcRhWfXGW8</span><span class="pun">=</span></code></li><li class="L3"><code><span class="typ">ListenPort</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="lit">8006</span></code></li><li class="L4"><code><span class="typ">PostUp</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> iptables </span><span class="pun">-</span><span class="pln">A FORWARD </span><span class="pun">-</span><span class="pln">i </span><span class="pun">%</span><span class="pln">i </span><span class="pun">-</span><span class="pln">j ACCEPT</span><span class="pun">;</span><span class="pln"> iptables </span><span class="pun">-</span><span class="pln">t nat </span><span class="pun">-</span><span class="pln">A POSTROUTING </span><span class="pun">-</span><span class="pln">o eth1 </span><span class="pun">-</span><span class="pln">j MASQUERADE</span></code></li><li class="L5"><code><span class="typ">PostDown</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> iptables </span><span class="pun">-</span><span class="pln">D FORWARD </span><span class="pun">-</span><span class="pln">i </span><span class="pun">%</span><span class="pln">i </span><span class="pun">-</span><span class="pln">j ACCEPT</span><span class="pun">;</span><span class="pln"> iptables </span><span class="pun">-</span><span class="pln">t nat </span><span class="pun">-</span><span class="pln">D POSTROUTING </span><span class="pun">-</span><span class="pln">o eth1 </span><span class="pun">-</span><span class="pln">j MASQUERADE</span></code></li><li class="L6"><code></code></li><li class="L7"><code><span class="pun">[</span><span class="typ">Peer</span><span class="pun">]</span></code></li><li class="L8"><code><span class="typ">PublicKey</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="typ">KYhBEfe76T3V2wMPNYqfH67</span><span class="pun">+</span><span class="lit">6KL85WVVMo8NhcFj</span><span class="pun">+</span><span class="pln">xw</span><span class="pun">=</span></code></li><li class="L9"><code><span class="typ">AllowedIPs</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="lit">10.0</span><span class="pun">.</span><span class="lit">1.2</span><span class="pun">/</span><span class="lit">32</span></code></li><li class="L0"><code></code></li><li class="L1"><code><span class="pun">[</span><span class="typ">Peer</span><span class="pun">]</span></code></li><li class="L2"><code><span class="typ">PublicKey</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1MRN8OEUQZ5HSaB0jy907zUjl</span><span class="pun">+</span><span class="pln">Z9zQPyVJQruEg2GCI</span><span class="pun">=</span></code></li><li class="L3"><code><span class="typ">AllowedIPs</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="lit">10.0</span><span class="pun">.</span><span class="lit">1.3</span><span class="pun">/</span><span class="lit">32</span></code></li></ol></pre><h4 id="h4-u542Fu52A8u670Du52A1u5668"><a name="启动服务器" class="reference-link"></a><span class="header-link octicon octicon-link"></span>启动服务器</h4><p><code>wg-quick up wg0</code></p> <h3 id="h3-u5BA2u6237u7AEFu7684u914Du7F6E"><a name="客户端的配置" class="reference-link"></a><span class="header-link octicon octicon-link"></span>客户端的配置</h3><pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code><span class="pun">[</span><span class="typ">Interface</span><span class="pun">]</span></code></li><li class="L1"><code><span class="typ">PrivateKey</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0OG59gIjuXJzciFFrxBkNDWQzfQoO4p5QkegoxdIv0s</span><span class="pun">=</span></code></li><li class="L2"><code><span class="typ">Address</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="lit">10.0</span><span class="pun">.</span><span class="lit">1.2</span><span class="pun">/</span><span class="lit">16</span></code></li><li class="L3"><code><span class="pln">DNS </span><span class="pun">=</span><span class="pln"> </span><span class="lit">223.6</span><span class="pun">.</span><span class="lit">6.6</span></code></li><li class="L4"><code><span class="pln">MTU </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1420</span></code></li><li class="L5"><code></code></li><li class="L6"><code><span class="pun">[</span><span class="typ">Peer</span><span class="pun">]</span></code></li><li class="L7"><code><span class="typ">PublicKey</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Na5BMpCXuG0wmyXZH1GE3Uic</span><span class="pun">+</span><span class="pln">hvkq4865lIR</span><span class="pun">+</span><span class="typ">RTJjUU</span><span class="pun">=</span></code></li><li class="L8"><code><span class="typ">AllowedIPs</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="lit">10.0</span><span class="pun">.</span><span class="lit">0.0</span><span class="pun">/</span><span class="lit">22</span><span class="pun">,</span><span class="pln"> </span><span class="lit">172.16</span><span class="pun">.</span><span class="lit">31.0</span><span class="pun">/</span><span class="lit">22</span></code></li><li class="L9"><code><span class="typ">Endpoint</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="lit">116.30</span><span class="pun">.</span><span class="lit">111.111</span><span class="pun">:</span><span class="lit">8006</span></code></li><li class="L0"><code><span class="typ">PersistentKeepalive</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="lit">30</span></code></li></ol></pre></body> </html>
+### 服务器配置
+`cd /etc/wireguard/`
+#### 配置转发功能
+`echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf`
+#### 创建密钥文件
+`umask 077`
+
+`wg genkey | tee privatekey | wg pubkey > publickey
+`
+#### 查看密钥
+`Cat publickey `
+
+```markdown
+Na5BMpCXuG0wmyXZH1GE3Uic+hvkq4865lIR+RTJjUU=
+```
+
+`Cat privatekey `
+
+```markdown
+kH+D4tV+2MJ0r3Pz0ZcfaAKdtW6JGHw1pxcRhWfXGW8=
+
+```
+#### 创建服务器wg配置文件
+`umask 022`
+
+`vim wg0.conf`
+#### 输入如下内容
+    [Interface]
+    Address = 10.0.1.1/16
+    PrivateKey = kH+D4tV+2MJ0r3Pz0ZcfaAKdtW6JGHw1pxcRhWfXGW8=
+    ListenPort = 8006
+    PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE
+    PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth1 -j MASQUERADE
+    
+    [Peer]
+    PublicKey = KYhBEfe76T3V2wMPNYqfH67+6KL85WVVMo8NhcFj+xw=
+    AllowedIPs = 10.0.1.2/32
+    
+    [Peer]
+    PublicKey = 1MRN8OEUQZ5HSaB0jy907zUjl+Z9zQPyVJQruEg2GCI=
+    AllowedIPs = 10.0.1.3/32
+#### 启动服务器
+`wg-quick up wg0
+`
+### 客户端的配置
+    [Interface]
+    PrivateKey = 0OG59gIjuXJzciFFrxBkNDWQzfQoO4p5QkegoxdIv0s=
+    Address = 10.0.1.2/16
+    DNS = 223.6.6.6
+    MTU = 1420
+    
+    [Peer]
+    PublicKey = Na5BMpCXuG0wmyXZH1GE3Uic+hvkq4865lIR+RTJjUU=
+    AllowedIPs = 10.0.0.0/22, 172.16.31.0/22
+    Endpoint = 116.30.111.111:8006
+    PersistentKeepalive = 30
+	
+	
+### 部分配置参考
+https://golb.hplar.ch/2019/07/wireguard-windows.html
